@@ -16,8 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"],
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],
+			"#/*": ["types/*"]
+		}
   },
   "include": [
     "srcipts",
@@ -26,7 +27,9 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "./vite.config.ts"
+		"./vite.config.mts",
+		"types/global.d.ts",
+		"types/index.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

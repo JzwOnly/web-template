@@ -16,7 +16,7 @@ export function Restart(paths = defaultPaths): Plugin {
 	paths = paths.map((path) => slash(resolve(path)))
 	const restart = debounce(async function touch() {
 		const time = new Date()
-		await utimes(r('vite.config.ts'), time, time)
+		await utimes(r('vite.config.mts'), time, time)
 	}, 1000)
 	return {
 		name: 'vite-plugin-force-restart',

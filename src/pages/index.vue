@@ -1,3 +1,11 @@
+<script lang="ts" setup>
+import { testApi } from '~/api/test'
+
+onMounted(async () => {
+	const ret = await testApi('123')
+	console.log(ret)
+})
+</script>
 <template>
 	<div>
 		<div class="grid grid-cols-3">

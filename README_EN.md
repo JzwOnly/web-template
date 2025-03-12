@@ -251,7 +251,7 @@ Welcome to follow **dishait**
 ### [1. Vite](https://cn.vitejs.dev/)
 
 This template uses **[Vite](https://cn.vitejs.dev/)** as the build tool. You can
-configure the project's build in `vite.config.ts` at the root directory.
+configure the project's build in `vite.config.mts` at the root directory.
 
 For the introduction of many mainstream plugins and complex configurations, they
 have been integrated into the presets under the root directory. In most cases,
@@ -1317,7 +1317,7 @@ For more details, please refer to:
 
 ### 38. Base Secure Path Resolution
 
-In Vite, if we change the `base` in `vite.config.ts`, it causes the resource
+In Vite, if we change the `base` in `vite.config.mts`, it causes the resource
 paths and route paths to become invalid. Using `safeResolve` can ensure that the
 same `base` is used in both development and production environments.
 
@@ -1349,11 +1349,11 @@ enable it intelligently.
 Now in `tov-template`, we can use the form of `vite.config.[mode].ts` to support
 configuration files for different environments.
 
-1. Only vite.config.ts is selected when there is no specific mode.
-2. When both vite.config.ts and vite.config.dev.ts exist, their configurations
+1. Only vite.config.mts is selected when there is no specific mode.
+2. When both vite.config.mts and vite.config.dev.ts exist, their configurations
    are merged during development, with the configuration in vite.config.dev.ts
    having higher priority.
-3. When both vite.config.ts and vite.config.prod.ts exist, their configurations
+3. When both vite.config.mts and vite.config.prod.ts exist, their configurations
    are merged during production, with the configuration in vite.config.prod.ts
    having higher priority.
 

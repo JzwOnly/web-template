@@ -245,7 +245,7 @@ pnpm safe:init
 ### [1. Vite 的](https://cn.vitejs.dev/)
 
 该模板采用 **[vite](https://cn.vitejs.dev/)** 作为构建工具，你可以在根目录下的
-`vite.config.ts` 对项目的构建进行配置。
+`vite.config.mts` 对项目的构建进行配置。
 
 对于众多主流插件的引入和繁杂配置已经整合到根目录下的预设 `presets`
 中，大多数情况下你是不需要重新对它们进行配置的。
@@ -1250,7 +1250,7 @@ pnpm deps:fresh
 
 ### 38. base 安全的路径解析
 
-在 `vite` 中，如果我们改了 `vite.config.ts` 中的
+在 `vite` 中，如果我们改了 `vite.config.mts` 中的
 `base`，这导致资源路径和路由路径失效，使用 `safeResolve`
 可以保证在开发环境和生产环境下都是统一的 `base`.
 
@@ -1282,10 +1282,10 @@ const path = safeResolve("你的路由路径")
 现在在 `tov-template` 中，我们可以使用 `vite.config.[mode].ts`
 的形式来支持不同环境下的配置文件。
 
-1. 仅 vite.config.ts 时，通用选择该配置
-2. vite.config.ts + vite.config.dev.ts，开发时合并两者的配置，同时
+1. 仅 vite.config.mts 时，通用选择该配置
+2. vite.config.mts + vite.config.dev.ts，开发时合并两者的配置，同时
    vite.config.dev.ts 的配置优先级更高
-3. vite.config.ts + vite.config.prod.ts 生产时合并两者的配置，同时
+3. vite.config.mts + vite.config.prod.ts 生产时合并两者的配置，同时
    vite.config.prod.ts 的配置优先级更高
 
 以此类推，支持不同的 `mode`

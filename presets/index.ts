@@ -32,12 +32,13 @@ import { viteMockServe as Mock } from 'vite-plugin-mock'
 import Removelog from 'vite-plugin-removelog'
 import Modules from 'vite-plugin-use-modules'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import Layouts from 'vite-plugin-vue-meta-layouts'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 import I18N from '@intlify/unplugin-vue-i18n/vite'
-import Legacy from 'vite-plugin-legacy-swc'
+// import Legacy from 'vite-plugin-legacy-swc'
 import Vue from '@vitejs/plugin-vue'
 import Jsx from '@vitejs/plugin-vue-jsx'
+import legacy from '@vitejs/plugin-legacy'
 
 // 内置插件
 import {
@@ -48,9 +49,10 @@ import {
 	Layers,
 	Optimize,
 } from './plugins'
-import { defaultBuildTargets, detectResolvers, useEnv } from './shared/detect'
+import { detectResolvers, useEnv } from './shared/detect'
 import { r } from './shared/path'
 import type { PluginOption } from 'vite'
+import MetaLayouts from 'vite-plugin-vue-meta-layouts'
 
 export default function () {
 	const env = useEnv()
@@ -67,8 +69,31 @@ export default function () {
 		 * 兼容不支持 esmModule 的浏览器
 		 * https://www.npmjs.com/package/@vitejs/plugin-legacy
 		 */
-		Legacy({
-			targets: defaultBuildTargets,
+		legacy({
+			targets: ['defaults', 'ie >= 11', 'chrome 69', 'Chrome >= 49'], //需要兼容的目标列表，可以设置多个
+			additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+			renderLegacyChunks: true,
+			polyfills: [
+				'es.promise.all-settled',
+				'es.object.entries',
+				'es.symbol',
+				'es.array.filter',
+				'es.promise',
+				'es.promise.finally',
+				'es/map',
+				'es/set',
+				'es.array.for-each',
+				'es.object.define-properties',
+				'es.object.define-property',
+				'es.object.get-own-property-descriptor',
+				'es.object.get-own-property-descriptors',
+				'es.object.keys',
+				'es.object.to-string',
+				'web.dom-collections.for-each',
+				'esnext.global-this',
+				'esnext.string.match-all',
+			],
+			modernPolyfills: ['es.promise.all-settled', 'es.object.entries'],
 		}),
 		/**
 		 * 智能启动 lightningcss
@@ -118,7 +143,9 @@ export default function () {
 		 * 布局系统
 		 * https://github.com/dishait/vite-plugin-vue-meta-layouts
 		 */
-		Layouts({
+		MetaLayouts({
+			target: 'src/layouts',
+			defaultLayout: 'custom',
 			skipTopLevelRouteLayout: true,
 		}),
 		/**
@@ -156,7 +183,7 @@ export default function () {
 					[VarletUIResolver(), '@varlet/ui'],
 					[IduxResolver(), '@idux/components'],
 					[InklineResolver(), '@inkline/inkline'],
-					[ElementPlusResolver(), 'element-plus'],
+					[ElementPlusResolver({ importStyle: 'sass' }), 'element-plus'],
 					[HeadlessUiResolver(), '@headlessui/vue'],
 					[ArcoResolver(), '@arco-design/web-vue'],
 					[AntDesignVueResolver({ importStyle: false }), 'ant-design-vue'],
@@ -203,6 +230,13 @@ export default function () {
 		 */
 		UnoCss({
 			safelist: env.VITE_APP_MARKDOWN ? safelist.split(' ') : undefined,
+		}),
+		/**
+		 * elementPlus 颜色主题修改
+		 * https://npm.org/unplugin-element-plus
+		 */
+		ElementPlus({
+			useSource: true,
 		}),
 	]
 	/**
@@ -258,7 +292,7 @@ export default function () {
 				],
 				resolvers: detectResolvers({
 					onlyExist: [
-						[ElementPlusResolver(), 'element-plus'],
+						[ElementPlusResolver({ importStyle: 'sass' }), 'element-plus'],
 						[TDesignResolver({ library: 'vue-next' }), 'tdesign-vue-next'],
 					],
 				}),
